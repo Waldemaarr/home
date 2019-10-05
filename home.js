@@ -1,26 +1,43 @@
 'use strict';
 
-let money = prompt("Ваш бюджет на месяц?", ''),
-    time = prompt("Введите дату в формате YYYY-MM-DD", '');
+let money = +prompt("Ваш бюджет на месяц?", ""),
+    time = prompt("Введите дату в формате YYYY-MM-DD", "");
 
 let appData = {
-    bjudjet : money,
-    timeData : time,
-    expenses : {},
-    optionalExpenses : {},
-    income : [],
-    savings : false
+    budget: money,
+    timeData: time,
+    expenses: {},
+    optionalExpenses: {},
+    income: [],
+    savings: false
+};
+
+for (let i = 0; i < 2; i++){
+    let a  = prompt("Введите обязательную статью расходов в этом месяце", "");
+    if (typeof(a) !== 'string' || typeof(a) == null || a == '' || a.length >= 50) {
+        continue;
+    }else{
+        let b = prompt("Во сколько обойдется?", "");
+        if (typeof(b) == null || b == ''){
+            continue;
+        }else {
+            appData.expenses[a] = b;
+        }
+    }
 }
 
-let a1 = prompt("Введите обязательную статью расходов в этом месяце", ''),
-    a2 = prompt("Во сколько обойдется?", ''),
-    a3 = prompt("Введите обязательную статью расходов в этом месяце", ''),
-    a4 = prompt("Во сколько обойдется?", '');
+appData.moneyPerDay = appData.budget / 30;
+if(appData.moneyPerDay <= 100) {
+    console.log("Small payment");
+}else if(appData.moneyPerDay > 100 && appData.moneyPerDay <= 1000) {
+    console.log("Avarage payment");
+}else if(appData.moneyPerDay > 1000) {
+    console.log("Good payment");
+}else{
+    console.log("Something wrong");
+}
 
-appData.expenses[a1] = a2;
-appData.expenses[a3] = a4;
-
+console.log(appData);
 alert("Ваш бюджет за один день: "
-    + (appData.bjudjet / 30).toFixed(1));
-
+    + (appData.moneyPerDay).toFixed(1));
 
